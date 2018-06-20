@@ -13,6 +13,7 @@ class App extends Component {
   componentDidMount() {
     fetch('/api/test')
       .then(response => {
+        console.log(response);
         return response.json()
       .then(json => {
         return response.ok ? json : Promise.reject(json);
@@ -20,6 +21,7 @@ class App extends Component {
       })
       .then((data) => {
         console.log('success');
+        this.setState({test: data})
       })
       .catch((error) => {
         console.log('Error', error);

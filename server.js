@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.get('/api/test', (req, res) => {
   const message = "success";
   console.log(message);
-  res.send(message);
+  res.json(message);
 });
 
 // The "catchall" handler: for any request that doesn't

@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import styled from 'styled-components';
 import './App.css';
+
+const Notepad = styled.div`
+  margin-top: 10%;
+  height: auto;
+  min-height: 90%;
+  width: 90%;
+  background: white;
+`;
+
+const Title = styled.h1`
+  font-family: 'Rock Salt', cursive;
+  margin: 0;
+  padding: 5px 0;
+  text-align: center;
+`;
+
+const NoteInput = styled.input`
+  width: 100%;
+  font-size: 26px;
+  height: 2em;
+  padding: 4px 2px 4px 5px
+`;
 
 class App extends Component {
   constructor() {
@@ -11,6 +33,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchNotes();
+  }
+
+  fetchNotes = () => {
     fetch('/api/test')
       .then(response => {
         console.log(response);
@@ -31,13 +57,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          {this.state.test}
-        </p>
+        <Notepad>
+          <Title>To Do</Title>
+          <NoteInput type="text" />
+        </Notepad>
+
       </div>
     );
   }

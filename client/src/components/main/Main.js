@@ -94,7 +94,7 @@ class Main extends Component {
 
     return (
       <div className="Main">
-
+        LOADING...
       </div>
     );
   }

@@ -61,6 +61,7 @@ class Main extends Component {
         });
       })
       .then((data) => {
+        console.log(data.messages);
         this.setState({
           notes: data.messages,
           ready: true,

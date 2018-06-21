@@ -18,12 +18,12 @@ const client = new Client({
   ssl: true,
 });
 
-client.connect();
 
 // Put all API endpoints under here
 
 // test
 app.get('/api/all-notes', (req, resp) => {
+  client.connect();
   client.query('SELECT * FROM notes;', (err, res) => {
   messages = res.rows;
     if (err) throw err;

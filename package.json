@@ -10,7 +10,7 @@
     "nodemon": "^1.17.5"
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "heroku-postbuild": "cd client && yarn && yarn run build"
   }
 }

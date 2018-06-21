@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import anime from 'animejs';
 import styled from 'styled-components';
 
@@ -70,12 +72,16 @@ class Main extends Component {
   }
 
   render() {
+    // const { history } = this.props;
     if (this.state.ready === true) {
 
       return (
         <div className="Main">
 
-          <Plus innerRef={el => (this.plusSign = el)}/>
+          <Plus
+            innerRef={el => (this.plusSign = el)}
+            onClick={this.animateOut}
+            />
 
           <Notepad innerRef={el => (this.notepad = el)}>
             <h1>NOTES</h1>
@@ -101,7 +107,6 @@ class Main extends Component {
      targets: notepad,
      opacity: [0,1],
      translateY: ["-100%", "10vh"],
-     // easing: "easeOutSine",
      elasticity: 400,
      duration: 800
    });
@@ -115,7 +120,31 @@ class Main extends Component {
    });
  }
 
+ animateOut = () => {
+   const { notepad, plusSign } = this;
+   const { history } = this.props;
+   anime({
+     targets: plusSign,
+     translateY: [0, -50],
+     rotate: 45,
+     elasticity: 400,
+     duration: 500
+   });
+   anime({
+     targets: notepad,
+     opacity: [1,0],
+     translateY: ["10vh", "-100%"],
+     elasticity: 400,
+     delay: 500,
+     duration: 800,
+     complete: function() {
+       history.push('/notes/new')
+     }
+   })
+
+ }
+
 
 }
 
-export default Main;
+export default withRouter(Main);

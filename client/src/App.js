@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import './App.css';
 
 const Notepad = styled.div`
-  margin-top: 10%;
   height: auto;
   min-height: 90%;
   width: 90%;
@@ -16,13 +15,6 @@ const Notepad = styled.div`
     text-align: center;
   }
 `;
-
-// const Title = styled.h1`
-//   font-family: 'Rock Salt', cursive;
-//   margin: 0;
-//   padding: 5px 0;
-//   text-align: center;
-// `;
 
 const NoteInput = styled.input`
   width: 100%;
@@ -102,7 +94,7 @@ class App extends Component {
    anime({
      targets: notepad,
      opacity: [0,1],
-     translateY: [-1000, 0],
+     translateY: ["-100%", "10%"],
      easing: "easeOutSine",
      duration: 2000
    })

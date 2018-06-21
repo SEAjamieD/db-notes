@@ -8,13 +8,33 @@ const app = express();
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+
+//Connect to postgres
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
+
 // Put all API endpoints under here
 
 // test
 app.get('/api/test', (req, res) => {
-  const message = "success";
-  console.log(message);
+  let message = "keep trying";
+
+  client.query('SELECT * FROM notes;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+
+    }
+    client.end();
+  });
+
   res.json(message);
+
 });
 
 // The "catchall" handler: for any request that doesn't

@@ -55,14 +55,13 @@ class Main extends Component {
   fetchNotes = () => {
     fetch('/api/test')
       .then(response => {
-        console.log(response);
         return response.json()
       .then(json => {
         return response.ok ? json : Promise.reject(json);
         });
       })
       .then((data) => {
-        console.log('success');
+        console.log(data);
         this.setState({
           test: data,
           ready: true,

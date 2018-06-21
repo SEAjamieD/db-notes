@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import anime from 'animejs';
 import styled from 'styled-components';
 
+import Loader from '../common/loader/Loader';
+
 
 
 const Notepad = styled.div`
@@ -72,7 +74,6 @@ class Main extends Component {
   }
 
   render() {
-    // const { history } = this.props;
     if (this.state.ready === true) {
 
       return (
@@ -93,9 +94,7 @@ class Main extends Component {
     }
 
     return (
-      <div className="Main">
-        LOADING...
-      </div>
+      <Loader />
     );
   }
 

@@ -1,33 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Textarea from "react-textarea-autosize";
 import anime from 'animejs';
 
-const Notepad = styled.div`
-  height: auto;
-  min-height: 90vh;
-  width: 90vw;
-  background: white;
-  h1 {
-    font-family: 'Rock Salt', cursive;
-    margin: 0;
-    padding: 5px 0;
-    text-align: center;
-  }
-`;
-
-const TitleInput = styled.input`
-  width: 100%;
-  border-radius: 0;
-  outline: none;
-  display: block;
-  padding: 18px 5px 8px 18px;
-
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: grey;
-`;
 
 const BackArrowContainer = styled.div`
   position: absolute;
@@ -51,12 +27,53 @@ const BackArrow = styled.div`
   clip-path: polygon(50% 0%, 0% 100%, 50% 75%, 100% 100%);
 `;
 
+const Notepad = styled.div`
+  height: auto;
+  min-height: 90vh;
+  width: 90vw;
+  background: white;
+  h1 {
+    font-family: 'Rock Salt', cursive;
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+  }
+`;
+
+const TitleInput = styled.input`
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  display: block;
+  padding: 18px 5px 8px 18px;
+
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: grey;
+`;
+
+const textAreaStyles = {
+  resize: 'none',
+  width: '100%',
+  minHeight: '30vh',
+  borderRadius: 0,
+  border: 'none',
+  outline: 'none',
+  paddingLeft: '18px',
+  paddingRight: '18px',
+  paddingTop: '20px',
+  paddingBottom: '20px',
+  fontSize: '14px',
+  };
 
 class NewNote extends React.Component {
 
 
   componentDidMount() {
     this.animateIn();
+    this.titleInput.focus();
   }
 
   goBack = () => {
@@ -101,7 +118,18 @@ class NewNote extends React.Component {
 
 
         <Notepad innerRef={el => (this.notepad = el)}>
-          <TitleInput placeholder="Title"/>
+
+          <TitleInput
+          innerRef={input => (this.titleInput = input)}
+          placeholder="Title"
+           />
+
+          <Textarea
+            style={textAreaStyles}
+            rows={4}
+            placeholder="Something important here..."
+            />
+
         </Notepad>
 
       </div>

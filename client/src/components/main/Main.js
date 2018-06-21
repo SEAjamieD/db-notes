@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import anime from 'animejs';
 import styled from 'styled-components';
 
+
+
 const Notepad = styled.div`
   height: auto;
   min-height: 90vh;
@@ -15,14 +17,17 @@ const Notepad = styled.div`
   }
 `;
 
-const NoteInput = styled.input`
-  width: 100%;
-  font-size: 26px;
-  height: 2em;
-  padding: 4px 2px 4px 5px;
-  border: none;
-  border-radius: 0;
+const Plus = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 5vw;
+  height: 30px;
+  width: 30px;
+  transform: rotate(45deg);
+  background: white;
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
 `;
+
 
 class Main extends Component {
   constructor() {
@@ -69,9 +74,11 @@ class Main extends Component {
 
       return (
         <div className="Main">
+
+          <Plus innerRef={el => (this.plusSign = el)}/>
+
           <Notepad innerRef={el => (this.notepad = el)}>
             <h1>NOTES</h1>
-            <NoteInput type="text" />
           </Notepad>
 
         </div>
@@ -89,14 +96,23 @@ class Main extends Component {
 
 
  animateIn() {
-   const { notepad } = this;
+   const { notepad, plusSign } = this;
    anime({
      targets: notepad,
      opacity: [0,1],
      translateY: ["-100%", "10vh"],
-     easing: "easeOutSine",
-     duration: 2000
-   })
+     // easing: "easeOutSine",
+     elasticity: 400,
+     duration: 800
+   });
+   anime({
+     targets: plusSign,
+     translateY: [-50, 0],
+     rotate: 45,
+     delay: 500,
+     elasticity: 400,
+     duration: 500
+   });
  }
 
 

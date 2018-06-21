@@ -45,7 +45,7 @@ class Main extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.test) {
+    if (this.state.ready === true) {
       this.animateIn();
     }
   }

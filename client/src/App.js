@@ -1,106 +1,27 @@
 import React, { Component } from 'react';
-import anime from 'animejs';
 import styled from 'styled-components';
+
+
+import Main from './components/main/Main';
 import './App.css';
 
-const Notepad = styled.div`
-  height: auto;
-  min-height: 90%;
-  width: 90%;
-  background: white;
-  h1 {
-    font-family: 'Rock Salt', cursive;
-    margin: 0;
-    padding: 5px 0;
-    text-align: center;
-  }
-`;
 
-const NoteInput = styled.input`
-  width: 100%;
-  font-size: 26px;
-  height: 2em;
-  padding: 4px 2px 4px 5px;
-  border: none;
-  border-radius: 0;
+const AppDiv = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 `;
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      test: '',
-      ready: false
-    }
-  }
-
-  componentDidMount() {
-    this.fetchNotes();
-  }
-
-  componentDidUpdate() {
-    if (this.state.test) {
-      this.animateIn();
-    }
-  }
-
-  fetchNotes = () => {
-    fetch('/api/test')
-      .then(response => {
-        console.log(response);
-        return response.json()
-      .then(json => {
-        return response.ok ? json : Promise.reject(json);
-        });
-      })
-      .then((data) => {
-        console.log('success');
-        this.setState({
-          test: data,
-          ready: true,
-        })
-      })
-      .catch((error) => {
-        console.log('Error', error);
-      })
-  }
 
   render() {
-    if (this.state.ready === true) {
-
-      return (
-        <div className="App">
-          <Notepad innerRef={el => (this.notepad = el)}>
-            <h1>NOTES</h1>
-            <NoteInput type="text" />
-          </Notepad>
-
-        </div>
-      );
-
-    }
-
     return (
-      <div className="App">
-
-      </div>
+      <AppDiv>
+        <Main />
+      </AppDiv>
     );
   }
-
-
-
- animateIn() {
-   const { notepad } = this;
-   anime({
-     targets: notepad,
-     opacity: [0,1],
-     translateY: ["-100%", "10%"],
-     easing: "easeOutSine",
-     duration: 2000
-   })
- }
-
-
 }
 
 export default App;

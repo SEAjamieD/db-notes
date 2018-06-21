@@ -2,11 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(bodyParser.json());
 
 
 //Connect to postgres
@@ -21,20 +23,14 @@ client.connect();
 // Put all API endpoints under here
 
 // test
-app.get('/api/test', (req, res) => {
-  let message = "keep trying";
-
+app.get('/api/all-notes', (req, resp) => {
   client.query('SELECT * FROM notes;', (err, res) => {
+  messages = res.rows;
     if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
 
-    }
+    resp.json({messages});
     client.end();
   });
-
-  res.json(message);
-
 });
 
 // The "catchall" handler: for any request that doesn't

@@ -37,7 +37,7 @@ class Main extends Component {
   constructor() {
     super()
     this.state = {
-      test: '',
+      notes: '',
       ready: false
     }
   }
@@ -53,7 +53,7 @@ class Main extends Component {
   }
 
   fetchNotes = () => {
-    fetch('/api/test')
+    fetch('/api/all-notes')
       .then(response => {
         return response.json()
       .then(json => {
@@ -61,9 +61,8 @@ class Main extends Component {
         });
       })
       .then((data) => {
-        console.log(data);
         this.setState({
-          test: data,
+          notes: data.messages,
           ready: true,
         })
       })
@@ -73,6 +72,8 @@ class Main extends Component {
   }
 
   render() {
+    const { notes } = this.state;
+
     if (this.state.ready === true) {
 
       return (
@@ -85,6 +86,7 @@ class Main extends Component {
 
           <Notepad innerRef={el => (this.notepad = el)}>
             <h1>NOTES</h1>
+
           </Notepad>
 
         </div>

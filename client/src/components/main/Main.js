@@ -32,6 +32,11 @@ const Plus = styled.div`
   clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
 `;
 
+const NoteTable = styled.table`
+  width: 100%;
+  border: 1px solid pink;
+`;
+
 
 class Main extends Component {
   constructor() {
@@ -72,6 +77,17 @@ class Main extends Component {
       })
   }
 
+  convertTimestamp = (timestamp) => {
+    if (timestamp) {
+      let d = new Date(timestamp);
+      const day = d.getDate();
+      const month = d.getMonth() + 1;
+      const year = d.getYear().toString().substr(-2);
+      const fullDate = `${month}/${day}/${year}`;
+      return fullDate;
+    }
+  }
+
   render() {
     const { notes } = this.state;
 
@@ -87,7 +103,16 @@ class Main extends Component {
 
           <Notepad innerRef={el => (this.notepad = el)}>
             <h1>NOTES</h1>
-
+            <NoteTable>
+              <tbody>
+              {notes.map((note) => (
+                <tr key={note.id}>
+                  <td>{note.title}</td>
+                  <td>{this.convertTimestamp(note.updated_at)}</td>
+                </tr>
+              ))}
+              </tbody>
+            </NoteTable>
           </Notepad>
 
         </div>

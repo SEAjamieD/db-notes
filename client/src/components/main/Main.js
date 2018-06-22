@@ -34,7 +34,16 @@ const Plus = styled.div`
 
 const NoteTable = styled.table`
   width: 100%;
-  border: 1px solid pink;
+  border: none;
+  border-radius: 0;
+  padding: 0 5%;
+  tr {
+    border: none;
+  };
+  td {
+    vertical-align: middle;
+    height: 30px;
+  }
 `;
 
 
@@ -43,7 +52,8 @@ class Main extends Component {
     super()
     this.state = {
       notes: '',
-      ready: false
+      ready: false,
+      error: '',
     }
   }
 
@@ -74,6 +84,10 @@ class Main extends Component {
       })
       .catch((error) => {
         console.log('Error', error);
+        this.setState({
+          ready: false,
+          error: error.err
+        })
       })
   }
 
@@ -108,7 +122,7 @@ class Main extends Component {
               {notes.map((note) => (
                 <tr key={note.id}>
                   <td>{note.title}</td>
-                  <td>{this.convertTimestamp(note.updated_at)}</td>
+                  <td className="notepad-date">{this.convertTimestamp(note.updated_at)}</td>
                 </tr>
               ))}
               </tbody>

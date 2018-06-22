@@ -24,13 +24,17 @@ const client = new Client({
 // test
 app.get('/api/all-notes', (req, resp) => {
   client.connect();
-  client.query('SELECT * FROM notes;', (err, res) => {
-  messages = res.rows;
-    if (err) throw err;
+  try {
+    client.query('SELECT * FROM notes;', (err, res) => {
+      let messages = res.rows;
 
-    resp.json({messages});
-    client.end();
-  });
+      resp.json({messages});
+      client.end();
+    });
+  }
+  catch (err) {
+    throw err
+  }
 });
 
 // The "catchall" handler: for any request that doesn't

@@ -11,6 +11,10 @@ body {
   font-family: sans-serif;
 }
 
+.notepad-date {
+  text-align: right;
+}
+
 ::-webkit-input-placeholder {
   font-style: italic;
   opacity: .4;

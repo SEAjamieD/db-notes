@@ -116,7 +116,7 @@ class Main extends Component {
 
           <Plus
             innerRef={el => (this.plusSign = el)}
-            onClick={this.animateOut}
+            onClick={this.animateOutNew}
             />
 
           <Notepad innerRef={el => (this.notepad = el)}>
@@ -124,7 +124,7 @@ class Main extends Component {
             <NoteTable>
               <tbody>
               {notes.map((note) => (
-                <tr key={note.id}>
+                <tr key={note.id} onClick={() => this.animateOutSingle(note.id)}>
                   <td className="note-title">{note.title}</td>
                   <td className="notepad-date">{this.convertTimestamp(note.updated_at)}</td>
                 </tr>
@@ -164,7 +164,7 @@ class Main extends Component {
    });
  }
 
- animateOut = () => {
+ animateOutNew = () => {
    const { notepad, plusSign } = this;
    const { history } = this.props;
    anime({
@@ -185,7 +185,29 @@ class Main extends Component {
        history.push('/notes/new')
      }
    })
+ }
 
+ animateOutSingle = (id) => {
+   const { notepad, plusSign } = this;
+   const { history } = this.props;
+   anime({
+     targets: plusSign,
+     translateY: [0, -50],
+     rotate: 45,
+     elasticity: 400,
+     duration: 500
+   });
+   anime({
+     targets: notepad,
+     opacity: [1,0],
+     translateY: ["10vh", "-100%"],
+     elasticity: 400,
+     delay: 500,
+     duration: 800,
+     complete: function() {
+       history.push(`/notes/${id}`)
+     }
+   })
  }
 
 

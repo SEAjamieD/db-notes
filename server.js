@@ -42,18 +42,20 @@ app.get('/api/all-notes', (req, resp) => {
 })
 
 app.get('/api/notes/:id', (req, resp) => {
+  var id = req.params.id;
 
   pool.connect((err, client, done) => {
+    console.log("fix single note for SQL injection protection")
+
     if (err) throw err
-    client.query(`SELECT * FROM notes WHERE id=${query.params.id};`, (err, res) => {
+    client.query(`SELECT * FROM notes WHERE id=${id}`, (err, res) => {
       done()
-      console.log(res);
-      // let messages = res.rows;
+      let message = res.rows;
       if (err) {
         console.log(err.stack)
       } else {
         console.log("Single Row ********************")
-        // resp.json({message})
+        resp.json(message)
       }
     })
   })

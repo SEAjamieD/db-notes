@@ -33,10 +33,10 @@ const Notepad = styled.div`
   width: 90vw;
   background: white;
   h1 {
-    font-family: 'Rock Salt', cursive;
-    margin: 0;
-    padding: 5px 0;
-    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: grey;
   }
 `;
 
@@ -69,11 +69,43 @@ const textAreaStyles = {
   };
 
 class SingleNote extends React.Component {
-
+  constructor() {
+    super()
+    this.state = {
+      note: '',
+      ready: false,
+      error: '',
+    }
+  }
 
   componentDidMount() {
+    this.fetchSingleNote();
     this.animateIn();
-    this.titleInput.focus();
+  }
+
+  fetchSingleNote = () => {
+    const { match } = this.props;
+    fetch(`/api/notes/${match.params.id}`)
+      .then(response => {
+        return response.json()
+      .then(json => {
+        return response.ok ? json : Promise.reject(json);
+        });
+      })
+      .then((data) => {
+        console.log(data[0].Title);
+        this.setState({
+          note: data[0],
+          ready: true,
+        })
+      })
+      .catch((error) => {
+        console.log('Error', error);
+        this.setState({
+          ready: false,
+          error: error.err
+        })
+      })
   }
 
   goBack = () => {
@@ -108,6 +140,7 @@ class SingleNote extends React.Component {
   }
 
   render() {
+    const { note } = this.state;
     return (
       <div>
 
@@ -118,17 +151,7 @@ class SingleNote extends React.Component {
 
 
         <Notepad innerRef={el => (this.notepad = el)}>
-
-          <TitleInput
-          innerRef={input => (this.titleInput = input)}
-          placeholder="Title"
-           />
-
-          <Textarea
-            style={textAreaStyles}
-            rows={4}
-            placeholder="Something important here..."
-            />
+          <h1>{note.title}</h1>
 
         </Notepad>
 

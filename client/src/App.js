@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import Main from './components/main/Main';
 import NewNote from './components/new/New';
+import SingleNote from './components/singleNote/SingleNote';
 import './App.css';
 
 
@@ -27,7 +28,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/notes/new" component={NewNote} />
-            
+            <Route exact path="/notes/:id" component={SingleNote} />
+
 
           </Switch>
         </BrowserRouter>

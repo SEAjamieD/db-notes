@@ -13,6 +13,11 @@ body {
 
 .notepad-date {
   text-align: right;
+  font-size: .85rem;
+}
+
+.note-title {
+  font-size: 1.2rem;
 }
 
 ::-webkit-input-placeholder {

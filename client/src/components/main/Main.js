@@ -33,16 +33,20 @@ const Plus = styled.div`
 `;
 
 const NoteTable = styled.table`
-  width: 100%;
-  border: none;
+  width: 90%;
+  margin: 0 auto;
   border-radius: 0;
-  padding: 0 5%;
+  border-collapse: collapse;
   tr {
     border: none;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(7, 156, 223, 0.2);
   };
   td {
-    vertical-align: middle;
-    height: 30px;
+    font-family: 'Ubuntu', sans-serif;
+    color: #515151;
+    vertical-align: bottom;
+    height: 40px;
   }
 `;
 
@@ -121,7 +125,7 @@ class Main extends Component {
               <tbody>
               {notes.map((note) => (
                 <tr key={note.id}>
-                  <td>{note.title}</td>
+                  <td className="note-title">{note.title}</td>
                   <td className="notepad-date">{this.convertTimestamp(note.updated_at)}</td>
                 </tr>
               ))}

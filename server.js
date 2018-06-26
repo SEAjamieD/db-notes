@@ -12,26 +12,34 @@ app.use(bodyParser.json());
 
 
 //Connect to postgres
-const { Client } = require('pg');
-const client = new Client({
+//use connection pooling so that can run multiple times
+const { Pool, Client } = require('pg');
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
-});
+})
 
 
 // Put all API endpoints under here
 
-// test
+// callback - checkout a client
 app.get('/api/all-notes', (req, resp) => {
-  client.connect();
-  client.query('SELECT * FROM notes;', (err, res) => {
-  let messages = res.rows;
-    if (err) throw err;
+  //use connection pooling so that can run multiple times
+  pool.connect((err, client, done) => {
+    if (err) throw err
+    client.query('SELECT * FROM notes;', (err, res) => {
+      done()
 
-    resp.json({messages});
-    client.end();
-  });
-});
+      let messages = res.rows;
+      if (err) {
+        console.log(err.stack)
+      } else {
+        console.log("********************")
+        resp.json({messages})
+      }
+    })
+  })
+})
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

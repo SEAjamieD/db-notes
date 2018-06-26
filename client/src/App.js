@@ -27,6 +27,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Main} />
             <Route exact path="/notes/new" component={NewNote} />
+            
 
           </Switch>
         </BrowserRouter>

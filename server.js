@@ -41,6 +41,25 @@ app.get('/api/all-notes', (req, resp) => {
   })
 })
 
+app.get('/api/notes/:id', (req, resp) => {
+
+  pool.connect((err, client, done) => {
+    if (err) throw err
+    client.query(`SELECT * FROM notes WHERE id=${query.params.id};`, (err, res) => {
+      done()
+      console.log(res);
+      // let messages = res.rows;
+      if (err) {
+        console.log(err.stack)
+      } else {
+        console.log("Single Row ********************")
+        // resp.json({message})
+      }
+    })
+  })
+
+})
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {

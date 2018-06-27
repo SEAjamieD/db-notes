@@ -133,7 +133,7 @@ class SingleNote extends React.Component {
     console.log("isNew?: " + this.state.isNew)
     if (this.state.isNew === false) {
       this.fetchSingleNote();
-      // this.animateIn();
+      this.animateIn();
     }
   }
 
@@ -265,6 +265,36 @@ class SingleNote extends React.Component {
     }
   }
 
+  whichBodyInput = () => {
+    const { isNew, areaClicked, note } = this.state;
+    if ( isNew === true ) {
+      return (
+        <Textarea
+        onChange={this.handleNoteBodyChange}
+        style={textAreaStyles}
+        rows={4}
+        defaultValue="Something interesting here..."
+        />
+    );
+    } else if ( areaClicked === true ) {
+      return (
+        <Textarea
+          onChange={this.handleNoteBodyChange}
+          style={textAreaStyles}
+          rows={4}
+          defaultValue={note.note}
+          />
+      );
+    } else {
+      return (
+        <NoteContentP
+          onClick={this.handleAreaClick}
+          >
+          {note.note}</NoteContentP>
+      );
+    }
+  }
+
   render() {
     const { note, change, areaClicked } = this.state;
 
@@ -289,20 +319,7 @@ class SingleNote extends React.Component {
           defaultValue={note.title}
            />
 
-         {areaClicked && areaClicked === true ? (
-           <Textarea
-             onChange={this.handleNoteBodyChange}
-             style={textAreaStyles}
-             rows={4}
-             defaultValue={note.note}
-             />
-         ) : (
-           <NoteContentP
-             placeholder="Something important here..."
-             onClick={this.handleAreaClick}
-             >
-             {note.note}</NoteContentP>
-         ) }
+        {this.whichBodyInput()}
 
         </Notepad>
 

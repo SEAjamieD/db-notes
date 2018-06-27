@@ -92,7 +92,7 @@ app.post('/api/notes/create', (req, resp) => {
 })
 
 ///// update a Note
-app.post('/api/notes/edit/:id', (req, resp) => {
+app.put('/api/notes/edit/:id', (req, resp) => {
   var id = req.params.id;
   var body = req.body.note;
   var title = body.title;
@@ -104,12 +104,6 @@ app.post('/api/notes/edit/:id', (req, resp) => {
     console.log(title);
     console.log(note);
 
-    `UPDATE notes
-     SET title = '${title}',
-          note = '${note}',
-          updated_at = current_timestamp
-     WHERE id = ${id};`
-
     client.query(`UPDATE notes
                   SET title = '${title}',
                       note = '${note}',
@@ -119,7 +113,6 @@ app.post('/api/notes/edit/:id', (req, resp) => {
           console.log(err)
         } else {
           console.log("Success")
-          resp.json('success')
         }
         done()
       })

@@ -13,6 +13,7 @@ const Notepad = styled.div`
   min-height: 90vh;
   width: 90vw;
   background: white;
+  padding-bottom: 20px;
   h1 {
     font-family: 'Rock Salt', cursive;
     font-size: 2em;

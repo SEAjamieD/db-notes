@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import Textarea from "react-textarea-autosize";
 import styled from 'styled-components';
 import anime from 'animejs';
 
@@ -52,6 +53,20 @@ const Notepad = styled.div`
   }
 `;
 
+const DoneButton = styled.button`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 50px;
+  width: 100px;
+  background: transparent;
+  font-size: 24px;
+  border: none;
+  outline: 0;
+  border-radius: none;
+  text-transform: uppercase;
+`;
+
 const TitleInput = styled.input`
   width: 100%;
   border-radius: 0;
@@ -66,15 +81,28 @@ const TitleInput = styled.input`
   color: grey;
 `;
 
-const NoteContentP = styled.p`
+const NoteContentP = styled.div`
   width: 100%;
   min-height: 60vh;
   border-radius: 0;
-  border: none;
   outline: 0;
   padding: 20px 18px;
   font-size: 14px;
 `;
+
+const textAreaStyles = {
+  resize: 'none',
+  width: '100%',
+  minHeight: '30vh',
+  borderRadius: 0,
+  border: 'none',
+  outline: 'none',
+  paddingLeft: '18px',
+  paddingRight: '18px',
+  paddingTop: '20px',
+  paddingBottom: '20px',
+  fontSize: '14px',
+  };
 
 
 
@@ -82,6 +110,9 @@ class SingleNote extends React.Component {
   constructor() {
     super()
     this.state = {
+      change: false,
+      updatedTitle: '',
+      updatedNote: '',
       note: '',
       ready: false,
       error: '',
@@ -90,7 +121,7 @@ class SingleNote extends React.Component {
 
   updateNote = () => {
     const { match } = this.props;
-    const note = {"title": this.titleInput.value, "note": this.state.note }
+    const note = {"title": this.state.updatedTitle, "note": this.state.updatedNote }
     console.log(note);
     fetch(`/api/notes/edit/${match.params.id}`, {
       method: 'PUT',
@@ -101,10 +132,9 @@ class SingleNote extends React.Component {
     })
       .then( res => res.json() )
       .then( response => {
-        console.log('Success')
-        if (response === 'success') {
-          this.setState({delta: 2})
-        }
+        console.log('Update Success')
+        this.setState({change: false})
+
       })
   }
 
@@ -123,9 +153,11 @@ class SingleNote extends React.Component {
         });
       })
       .then((data) => {
-        console.log(data[0].Title);
+        console.log(data[0].title);
         this.setState({
           note: data[0],
+          updatedTitle: data[0].title,
+          updatedNote: data[0].note,
           ready: true,
         })
       })
@@ -136,6 +168,25 @@ class SingleNote extends React.Component {
           error: error.err
         })
       })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      change: true,
+      updatedTitle: e.target.value
+    })
+  }
+
+  handleNoteBodyChange = (e) => {
+    this.setState({
+      updatedNote: e.target.value
+    })
+  }
+
+  handleAreaClick = () => {
+    this.setState({
+      change: true
+    })
   }
 
   goBack = () => {
@@ -170,7 +221,7 @@ class SingleNote extends React.Component {
   }
 
   render() {
-    const { note } = this.state;
+    const { note, change } = this.state;
     return (
       <div>
 
@@ -181,17 +232,34 @@ class SingleNote extends React.Component {
 
 
         <Notepad innerRef={el => (this.notepad = el)}>
+
+          { change && change === true ? (
+            <DoneButton
+              onClick={this.updateNote}
+              >Done</DoneButton>
+          ) : ( <h2></h2> ) }
+
+
           <TitleInput
           innerRef={input => (this.titleInput = input)}
           onChange={this.handleChange}
           defaultValue={note.title}
            />
 
-         <NoteContentP
-          contentEditable
-          suppressContentEditableWarning
-          >
-          {note.note}</NoteContentP>
+         {change && change === true ? (
+           <Textarea
+             onChange={this.handleNoteBodyChange}
+             style={textAreaStyles}
+             rows={4}
+             placeholder="Something important here..."
+             defaultValue={note.note}
+             />
+         ) : (
+           <NoteContentP
+             onClick={this.handleAreaClick}
+             >
+             {note.note}</NoteContentP>
+         ) }
 
         </Notepad>
 

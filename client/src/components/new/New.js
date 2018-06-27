@@ -110,10 +110,9 @@ class NewNote extends React.Component {
     })
       .then( res => res.json() )
       .then( response => {
-        console.log('Success')
-        if (response === 'success') {
-          this.setState({delta: 2})
-        }
+        console.log(response)
+        let newID = response;
+        this.props.history.push(`/notes/${newID}`)
       })
   }
 
@@ -162,7 +161,7 @@ class NewNote extends React.Component {
   }
 
   render() {
-    const { title, delta } = this.state;
+    const { delta } = this.state;
 
     return (
       <div>
@@ -179,12 +178,6 @@ class NewNote extends React.Component {
             <DoneButton
               onClick={this.createNote}
               >Done</DoneButton>
-          ) : ( <h2></h2> ) }
-
-          { delta && delta === 2 ? (
-            <DoneButton
-              onClick={this.createNote}
-              >Edit</DoneButton>
           ) : ( <h2></h2> ) }
 
           <TitleInput

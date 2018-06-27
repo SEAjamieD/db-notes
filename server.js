@@ -78,7 +78,43 @@ app.post('/api/notes/create', (req, resp) => {
     console.log(note);
 
     client.query(`INSERT INTO notes (title, note, created_at, updated_at, user_id)
-      VALUES ('${title}', '${note}', current_timestamp, current_timestamp, 1)`, (err, res) => {
+      VALUES ('${title}', '${note}', current_timestamp, current_timestamp, 1) returning id`, (err, res) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Success")
+          var newlyCreatedNoteId = res.rows[0].id;
+          resp.json(newlyCreatedNoteId)
+        }
+        done()
+      })
+  })
+})
+
+///// update a Note
+app.post('/api/notes/edit/:id', (req, resp) => {
+  var id = req.params.id;
+  var body = req.body.note;
+  var title = body.title;
+  var note = body.note;
+  pool.connect((err, client, done) => {
+    if (err) throw err;
+
+    console.log(id);
+    console.log(title);
+    console.log(note);
+
+    `UPDATE notes
+     SET title = '${title}',
+          note = '${note}',
+          updated_at = current_timestamp
+     WHERE id = ${id};`
+
+    client.query(`UPDATE notes
+                  SET title = '${title}',
+                      note = '${note}',
+                      updated_at = current_timestamp
+                 WHERE id = ${id};`, (err, res) => {
         if (err) {
           console.log(err)
         } else {

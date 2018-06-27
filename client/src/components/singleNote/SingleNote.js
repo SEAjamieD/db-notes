@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Textarea from "react-textarea-autosize";
 import anime from 'animejs';
 
 
@@ -25,6 +24,7 @@ const BackArrow = styled.div`
   width: 30px;
   background: white;
   clip-path: polygon(50% 0%, 0% 100%, 50% 75%, 100% 100%);
+  transform: rotate(-90deg);
 `;
 
 const Notepad = styled.div`
@@ -32,6 +32,7 @@ const Notepad = styled.div`
   min-height: 90vh;
   width: 90vw;
   background: white;
+  transform: translateY(10vh);
   h1 {
     width: 100%;
     border-radius: 0;
@@ -51,6 +52,32 @@ const Notepad = styled.div`
   }
 `;
 
+const TitleInput = styled.input`
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  outline: none;
+  display: block;
+  padding: 18px 5px 8px 18px;
+
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: grey;
+`;
+
+const NoteContentP = styled.p`
+  width: 100%;
+  min-height: 60vh;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  padding: 20px 18px;
+  font-size: 14px;
+`;
+
+
+
 class SingleNote extends React.Component {
   constructor() {
     super()
@@ -61,9 +88,29 @@ class SingleNote extends React.Component {
     }
   }
 
+  updateNote = () => {
+    const { match } = this.props;
+    const note = {"title": this.titleInput.value, "note": this.state.note }
+    console.log(note);
+    fetch(`/api/notes/edit/${match.params.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({note}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( res => res.json() )
+      .then( response => {
+        console.log('Success')
+        if (response === 'success') {
+          this.setState({delta: 2})
+        }
+      })
+  }
+
   componentDidMount() {
     this.fetchSingleNote();
-    this.animateIn();
+    // this.animateIn();
   }
 
   fetchSingleNote = () => {
@@ -117,7 +164,7 @@ class SingleNote extends React.Component {
       delay: 400,
       duration: 500,
       complete: function() {
-        history.goBack();
+        history.push('/');
       }
     });
   }
@@ -134,8 +181,18 @@ class SingleNote extends React.Component {
 
 
         <Notepad innerRef={el => (this.notepad = el)}>
-          <h1>{note.title}</h1>
-          <p>{note.note}</p>
+          <TitleInput
+          innerRef={input => (this.titleInput = input)}
+          onChange={this.handleChange}
+          defaultValue={note.title}
+           />
+
+         <NoteContentP
+          contentEditable
+          suppressContentEditableWarning
+          >
+          {note.note}</NoteContentP>
+
         </Notepad>
 
       </div>

@@ -111,12 +111,31 @@ class SingleNote extends React.Component {
     super()
     this.state = {
       change: null,
+      areaClicked: null,
       updatedTitle: '',
       updatedNote: '',
       note: '',
       ready: false,
       error: '',
     }
+  }
+
+  createNote = () => {
+    const note = {"title": this.titleInput.value, "note": this.state.note }
+    console.log(note);
+    fetch('/api/notes/create', {
+      method: 'POST',
+      body: JSON.stringify({note}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( res => res.json() )
+      .then( response => {
+        console.log(response)
+        let newID = response;
+        this.props.history.push(`/notes/${newID}`)
+      })
   }
 
   updateNote = () => {
@@ -179,13 +198,14 @@ class SingleNote extends React.Component {
 
   handleNoteBodyChange = (e) => {
     this.setState({
+      change: true,
       updatedNote: e.target.value
     })
   }
 
   handleAreaClick = () => {
     this.setState({
-      change: true
+      areaClicked: true
     })
   }
 
@@ -221,7 +241,7 @@ class SingleNote extends React.Component {
   }
 
   render() {
-    const { note, change } = this.state;
+    const { note, change, areaClicked } = this.state;
 
     return (
       <div>
@@ -244,10 +264,11 @@ class SingleNote extends React.Component {
           <TitleInput
           innerRef={input => (this.titleInput = input)}
           onChange={this.handleChange}
+          placeholder="Title"
           defaultValue={note.title}
            />
 
-         {change && change === true ? (
+         {areaClicked && areaClicked === true ? (
            <Textarea
              onChange={this.handleNoteBodyChange}
              style={textAreaStyles}

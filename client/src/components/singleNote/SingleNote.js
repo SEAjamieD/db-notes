@@ -272,7 +272,7 @@ class SingleNote extends React.Component {
         onChange={this.handleNoteBodyChange}
         style={textAreaStyles}
         rows={4}
-        defaultValue="Something interesting here..."
+        placeholder="Something interesting here..."
         />
     );
     } else if ( areaClicked === true ) {

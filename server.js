@@ -68,8 +68,25 @@ app.get('/api/notes/:id', (req, resp) => {
 ///// POST A SINGLE NOTE
 
 app.post('/api/notes/create', (req, resp) => {
+  var body = req.body.note;
+  var title = body.title;
+  var note = body.note;
+  pool.connect((err, client, done) => {
+    if (err) throw err;
 
-  console.log(req.body);
+    console.log(title);
+    console.log(note);
+
+    client.query(`INSERT INTO notes (title, note, created_at, updated_at, user_id)
+      VALUES ('${title}', '${note}', current_timestamp, current_timestamp, 1)`, (err, res) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Success")
+        }
+        done()
+      })
+  })
 })
 
 

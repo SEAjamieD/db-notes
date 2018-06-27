@@ -49,7 +49,7 @@ const Notepad = styled.div`
     width: 100%;
     min-height: 30vh;
     padding: 20px 18px;
-    font-size: 14px;
+    font-size: 16px;
   }
 `;
 

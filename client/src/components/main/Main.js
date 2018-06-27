@@ -15,8 +15,8 @@ const Notepad = styled.div`
   background: white;
   h1 {
     font-family: 'Rock Salt', cursive;
-    margin: 0;
-    padding: 5px 0;
+    font-size: 2em;
+    padding: 30px 0 10px;
     text-align: center;
   }
 `;

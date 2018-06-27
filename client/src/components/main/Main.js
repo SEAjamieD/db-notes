@@ -125,7 +125,9 @@ class Main extends Component {
             <NoteTable>
               <tbody>
               {notes.map((note) => (
-                <tr key={note.id} onClick={() => this.animateOutSingle(note.id)}>
+                <tr key={note.id}
+                  onClick={() => this.animateOutSingle(note.id)}
+                  >
                   <td className="note-title">{note.title}</td>
                   <td className="notepad-date">{this.convertTimestamp(note.updated_at)}</td>
                 </tr>

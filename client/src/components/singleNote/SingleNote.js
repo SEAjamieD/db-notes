@@ -55,9 +55,10 @@ const Notepad = styled.div`
 
 const DoneButton = styled.button`
   position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 50px;
+  top: 15px;
+  right: 1vw;
+  color: white;
+  height: 30px;
   width: 100px;
   background: transparent;
   font-size: 24px;
@@ -65,6 +66,7 @@ const DoneButton = styled.button`
   outline: 0;
   border-radius: none;
   text-transform: uppercase;
+  font-family: 'Ubuntu', sans-serif;
 `;
 
 const TitleInput = styled.input`
@@ -110,6 +112,7 @@ class SingleNote extends React.Component {
   constructor() {
     super()
     this.state = {
+      isNew: true,
       change: null,
       areaClicked: null,
       updatedTitle: '',
@@ -120,8 +123,24 @@ class SingleNote extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.match.params.id) {
+      this.setState({isNew: false})
+    }
+  }
+
+  componentDidMount() {
+    console.log("isNew?: " + this.state.isNew)
+    if (this.state.isNew === false) {
+      this.fetchSingleNote();
+      // this.animateIn();
+    }
+  }
+
+
+
   createNote = () => {
-    const note = {"title": this.titleInput.value, "note": this.state.note }
+    const note = {"title": this.titleInput.value, "note": this.state.updatedNote }
     console.log(note);
     fetch('/api/notes/create', {
       method: 'POST',
@@ -157,10 +176,6 @@ class SingleNote extends React.Component {
       })
   }
 
-  componentDidMount() {
-    this.fetchSingleNote();
-    // this.animateIn();
-  }
 
   fetchSingleNote = () => {
     const { match } = this.props;
@@ -240,6 +255,16 @@ class SingleNote extends React.Component {
     });
   }
 
+  whichDoneButton = () => {
+    if ( (this.state.isNew === true) && (this.state.change === true) ) {
+      return <DoneButton onClick={this.createNote}>Done</DoneButton>;
+    } else if (this.state.change === true) {
+      return <DoneButton onClick={this.updateNote}>Done</DoneButton>
+    } else {
+      return;
+    }
+  }
+
   render() {
     const { note, change, areaClicked } = this.state;
 
@@ -251,14 +276,10 @@ class SingleNote extends React.Component {
           <p ref={el => (this.backNotes = el)}>Notes</p>
         </BackArrowContainer>
 
+        {this.whichDoneButton()}
 
         <Notepad innerRef={el => (this.notepad = el)}>
 
-          { change && change === true ? (
-            <DoneButton
-              onClick={this.updateNote}
-              >Done</DoneButton>
-          ) : ( <h2></h2> ) }
 
 
           <TitleInput
@@ -273,11 +294,11 @@ class SingleNote extends React.Component {
              onChange={this.handleNoteBodyChange}
              style={textAreaStyles}
              rows={4}
-             placeholder="Something important here..."
              defaultValue={note.note}
              />
          ) : (
            <NoteContentP
+             placeholder="Something important here..."
              onClick={this.handleAreaClick}
              >
              {note.note}</NoteContentP>

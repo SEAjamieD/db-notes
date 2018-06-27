@@ -33,40 +33,23 @@ const Notepad = styled.div`
   width: 90vw;
   background: white;
   h1 {
+    width: 100%;
+    border-radius: 0;
+    display: block;
+    padding: 18px 5px 8px 18px;
+
     font-family: 'Ubuntu', sans-serif;
     font-size: 26px;
     font-weight: 600;
     color: grey;
+  };
+  p {
+    width: 100%;
+    min-height: 30vh;
+    padding: 20px 18px;
+    font-size: 14px;
   }
 `;
-
-const TitleInput = styled.input`
-  width: 100%;
-  border-radius: 0;
-  border: none;
-  outline: none;
-  display: block;
-  padding: 18px 5px 8px 18px;
-
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: grey;
-`;
-
-const textAreaStyles = {
-  resize: 'none',
-  width: '100%',
-  minHeight: '30vh',
-  borderRadius: 0,
-  border: 'none',
-  outline: 'none',
-  paddingLeft: '18px',
-  paddingRight: '18px',
-  paddingTop: '20px',
-  paddingBottom: '20px',
-  fontSize: '14px',
-  };
 
 class SingleNote extends React.Component {
   constructor() {
@@ -152,7 +135,7 @@ class SingleNote extends React.Component {
 
         <Notepad innerRef={el => (this.notepad = el)}>
           <h1>{note.title}</h1>
-
+          <p>{note.note}</p>
         </Notepad>
 
       </div>

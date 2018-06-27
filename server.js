@@ -83,6 +83,7 @@ app.post('/api/notes/create', (req, resp) => {
           console.log(err)
         } else {
           console.log("Success")
+          resp.json('success')
         }
         done()
       })

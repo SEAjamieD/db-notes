@@ -87,6 +87,7 @@ class NewNote extends React.Component {
   constructor() {
     super();
     this.state = ({
+      delta: 0,
       title: '',
       note: ''
     })
@@ -109,12 +110,18 @@ class NewNote extends React.Component {
     })
       .then( res => res.json() )
       .then( response => {
-        console.log('Success', response)
+        console.log('Success')
+        if (response === 'success') {
+          this.setState({delta: 2})
+        }
       })
   }
 
   handleChange = (e) => {
-    this.setState({title: e.target.value})
+    this.setState({
+      delta: 1,
+      title: e.target.value
+    })
   }
 
   handleNoteBodyChange = (e) => {
@@ -155,7 +162,7 @@ class NewNote extends React.Component {
   }
 
   render() {
-    const { title } = this.state;
+    const { title, delta } = this.state;
 
     return (
       <div>
@@ -168,10 +175,16 @@ class NewNote extends React.Component {
 
         <Notepad innerRef={el => (this.notepad = el)}>
 
-          { title && title.length > 0 ? (
+          { delta && delta === 1 ? (
             <DoneButton
               onClick={this.createNote}
               >Done</DoneButton>
+          ) : ( <h2></h2> ) }
+
+          { delta && delta === 2 ? (
+            <DoneButton
+              onClick={this.createNote}
+              >Edit</DoneButton>
           ) : ( <h2></h2> ) }
 
           <TitleInput

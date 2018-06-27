@@ -87,7 +87,8 @@ class NewNote extends React.Component {
   constructor() {
     super();
     this.state = ({
-      title: ''
+      title: '',
+      note: ''
     })
   }
 
@@ -97,7 +98,7 @@ class NewNote extends React.Component {
   }
 
   createNote = () => {
-    const note = {"title": "test", "note": "test body" }
+    const note = {"title": this.titleInput.value, "note": this.state.note }
     console.log(note);
     fetch('/api/notes/create', {
       method: 'POST',
@@ -114,6 +115,10 @@ class NewNote extends React.Component {
 
   handleChange = (e) => {
     this.setState({title: e.target.value})
+  }
+
+  handleNoteBodyChange = (e) => {
+    this.setState({note: e.target.value})
   }
 
 
@@ -164,7 +169,9 @@ class NewNote extends React.Component {
         <Notepad innerRef={el => (this.notepad = el)}>
 
           { title && title.length > 0 ? (
-            <DoneButton>Done</DoneButton>
+            <DoneButton
+              onClick={this.createNote}
+              >Done</DoneButton>
           ) : ( <h2></h2> ) }
 
           <TitleInput
@@ -174,6 +181,7 @@ class NewNote extends React.Component {
            />
 
           <Textarea
+            onChange={this.handleNoteBodyChange}
             style={textAreaStyles}
             rows={4}
             placeholder="Something important here..."

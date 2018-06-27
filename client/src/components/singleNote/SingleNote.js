@@ -110,7 +110,7 @@ class SingleNote extends React.Component {
   constructor() {
     super()
     this.state = {
-      change: false,
+      change: null,
       updatedTitle: '',
       updatedNote: '',
       note: '',
@@ -132,8 +132,8 @@ class SingleNote extends React.Component {
     })
       .then( res => res.json() )
       .then( response => {
-        console.log('Update Success')
-        this.setState({change: false})
+        console.log(response)
+        this.setState({change: null})
 
       })
   }
@@ -222,6 +222,7 @@ class SingleNote extends React.Component {
 
   render() {
     const { note, change } = this.state;
+
     return (
       <div>
 

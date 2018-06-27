@@ -28,7 +28,7 @@ app.get('/api/all-notes', (req, resp) => {
   //use connection pooling so that can run multiple times
   pool.connect((err, client, done) => {
     if (err) throw err
-    client.query('SELECT * FROM notes;', (err, res) => {
+    client.query('SELECT * FROM notes ORDER BY updated_at DESC;', (err, res) => {
       done()
 
       let messages = res.rows;
@@ -113,6 +113,7 @@ app.put('/api/notes/edit/:id', (req, resp) => {
           console.log(err)
         } else {
           console.log("Success")
+          resp.json(res);
         }
         done()
       })

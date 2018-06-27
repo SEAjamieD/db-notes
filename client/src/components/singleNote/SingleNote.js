@@ -259,6 +259,8 @@ class SingleNote extends React.Component {
       return <DoneButton onClick={this.createNote}>Done</DoneButton>;
     } else if (this.state.change === true) {
       return <DoneButton onClick={this.updateNote}>Done</DoneButton>
+    } else if ( (this.state.isNew === false) && (this.state.change === null) ) { 
+      return <DoneButton onClick={this.deleteNote}>Delete</DoneButton>
     } else {
       return;
     }

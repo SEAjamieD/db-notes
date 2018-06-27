@@ -27,7 +27,22 @@ const BackArrow = styled.div`
   clip-path: polygon(50% 0%, 0% 100%, 50% 75%, 100% 100%);
 `;
 
+const DoneButton = styled.button`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 50px;
+  width: 100px;
+  background: transparent;
+  font-size: 24px;
+  border: none;
+  outline: 0;
+  border-radius: none;
+  text-transform: uppercase;
+`;
+
 const Notepad = styled.div`
+  position: relative;
   height: auto;
   min-height: 90vh;
   width: 90vw;
@@ -69,12 +84,39 @@ const textAreaStyles = {
   };
 
 class NewNote extends React.Component {
-
+  constructor() {
+    super();
+    this.state = ({
+      title: ''
+    })
+  }
 
   componentDidMount() {
     this.animateIn();
     this.titleInput.focus();
   }
+
+  createNote = () => {
+    const note = {"title": "test", "note": "test body" }
+    console.log(note);
+    fetch('/api/notes/create', {
+      method: 'POST',
+      body: JSON.stringify({note}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( res => res.json() )
+      .then( response => {
+        console.log('Success', response)
+      })
+  }
+
+  handleChange = (e) => {
+    this.setState({title: e.target.value})
+  }
+
+
 
   goBack = () => {
     const { notepad, backArrow, backNotes } = this;
@@ -108,6 +150,8 @@ class NewNote extends React.Component {
   }
 
   render() {
+    const { title } = this.state;
+
     return (
       <div>
 
@@ -119,8 +163,13 @@ class NewNote extends React.Component {
 
         <Notepad innerRef={el => (this.notepad = el)}>
 
+          { title && title.length > 0 ? (
+            <DoneButton>Done</DoneButton>
+          ) : ( <h2></h2> ) }
+
           <TitleInput
           innerRef={input => (this.titleInput = input)}
+          onChange={this.handleChange}
           placeholder="Title"
            />
 

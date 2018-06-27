@@ -22,6 +22,7 @@ const pool = new Pool({
 
 // Put all API endpoints under here
 
+///// GET ALL NOTES
 // callback - checkout a client
 app.get('/api/all-notes', (req, resp) => {
   //use connection pooling so that can run multiple times
@@ -41,6 +42,8 @@ app.get('/api/all-notes', (req, resp) => {
   })
 })
 
+
+///// GET A SINGLE NOTE
 app.get('/api/notes/:id', (req, resp) => {
   var id = req.params.id;
 
@@ -61,6 +64,14 @@ app.get('/api/notes/:id', (req, resp) => {
   })
 
 })
+
+///// POST A SINGLE NOTE
+
+app.post('/api/notes/create', (req, resp) => {
+
+  console.log(req.body);
+})
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

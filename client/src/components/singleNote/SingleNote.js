@@ -137,8 +137,6 @@ class SingleNote extends React.Component {
     }
   }
 
-
-
   createNote = () => {
     const note = {"title": this.titleInput.value, "note": this.state.updatedNote }
     console.log(note);
@@ -153,7 +151,8 @@ class SingleNote extends React.Component {
       .then( response => {
         console.log(response)
         let newID = response;
-        this.props.history.push(`/notes/${newID}`)
+        this.props.history.push(`/notes/${newID}`);
+        this.setState({change: null})
       })
   }
 

@@ -154,7 +154,10 @@ class SingleNote extends React.Component {
         console.log(response)
         let newID = response;
         this.props.history.push(`/notes/${newID}`);
-        this.setState({change: null})
+        this.setState({
+          change: null,
+          rawMarkDown: false,
+        })
       })
   }
 
@@ -172,7 +175,10 @@ class SingleNote extends React.Component {
       .then( res => res.json() )
       .then( response => {
         console.log(response)
-        this.setState({change: null})
+        this.setState({
+          change: null,
+          rawMarkDown: false,
+        })
 
       })
   }
@@ -303,7 +309,6 @@ class SingleNote extends React.Component {
     return (
       <Textarea
         onChange={this.handleNoteBodyChange}
-        onClick={this.handleMarkdownSwap}
         style={textAreaStyles}
         rows={4}
         defaultValue={updatedNote}

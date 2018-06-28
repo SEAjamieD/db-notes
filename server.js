@@ -120,6 +120,26 @@ app.put('/api/notes/edit/:id', (req, resp) => {
   })
 })
 
+//// Delete a single note
+app.delete('/api/notes/:id', (req, resp) => {
+  var id = req.params.id;
+  pool.connect((err, client, done) => {
+    if (err) throw err;
+
+    client.query(`DELETE FROM notes
+                    WHERE id=${id}
+                    AND user_id=1`, (err, res) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("Success")
+          resp.json(res);
+        }
+        done()
+      })
+  })
+})
+
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

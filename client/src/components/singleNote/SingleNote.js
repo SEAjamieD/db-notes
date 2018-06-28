@@ -175,6 +175,21 @@ class SingleNote extends React.Component {
       })
   }
 
+  deleteNote = () => {
+    const { match, history } = this.props;
+    fetch(`/api/notes/${match.params.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( res => res.json() )
+      .then( response => {
+        console.log(response)
+        history.push('/');
+      })
+  }
+
 
   fetchSingleNote = () => {
     const { match } = this.props;
@@ -259,7 +274,7 @@ class SingleNote extends React.Component {
       return <DoneButton onClick={this.createNote}>Done</DoneButton>;
     } else if (this.state.change === true) {
       return <DoneButton onClick={this.updateNote}>Done</DoneButton>
-    } else if ( (this.state.isNew === false) && (this.state.change === null) ) { 
+    } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
       return <DoneButton onClick={this.deleteNote}>Delete</DoneButton>
     } else {
       return;

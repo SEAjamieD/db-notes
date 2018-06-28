@@ -283,6 +283,7 @@ class SingleNote extends React.Component {
 
   whichBodyInput = () => {
     const { isNew, areaClicked, note } = this.state;
+
     if ( isNew === true ) {
       return (
         <Textarea
@@ -292,7 +293,7 @@ class SingleNote extends React.Component {
         placeholder="Something interesting here..."
         />
     );
-    } else if ( areaClicked === true ) {
+  } else if ( note ) {
       return (
         <Textarea
           onChange={this.handleNoteBodyChange}
@@ -300,13 +301,6 @@ class SingleNote extends React.Component {
           rows={4}
           defaultValue={note.note}
           />
-      );
-    } else {
-      return (
-        <NoteContentP
-          onClick={this.handleAreaClick}
-          >
-          {note.note}</NoteContentP>
       );
     }
   }

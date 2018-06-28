@@ -114,7 +114,6 @@ class SingleNote extends React.Component {
     this.state = {
       isNew: true,
       change: null,
-      areaClicked: null,
       updatedTitle: '',
       updatedNote: '',
       note: '',
@@ -232,12 +231,6 @@ class SingleNote extends React.Component {
     })
   }
 
-  handleAreaClick = () => {
-    this.setState({
-      areaClicked: true
-    })
-  }
-
   goBack = () => {
     const { notepad, backArrow, backNotes } = this;
     const { history } = this.props;
@@ -282,7 +275,7 @@ class SingleNote extends React.Component {
   }
 
   whichBodyInput = () => {
-    const { isNew, areaClicked, note } = this.state;
+    const { isNew, note } = this.state;
 
     if ( isNew === true ) {
       return (
@@ -306,7 +299,7 @@ class SingleNote extends React.Component {
   }
 
   render() {
-    const { note, change, areaClicked } = this.state;
+    const { note, change } = this.state;
 
     return (
       <div>

@@ -56,7 +56,7 @@ const Notepad = styled.div`
 const DoneButton = styled.button`
   position: absolute;
   top: 15px;
-  right: 1vw;
+  right: 5vw;
   color: white;
   height: 30px;
   width: 100px;

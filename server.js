@@ -78,7 +78,7 @@ app.post('/api/notes/create', (req, resp) => {
     console.log(note);
 
     client.query(`INSERT INTO notes (title, note, created_at, updated_at, user_id)
-      VALUES ('${title}', '${note}', current_timestamp, current_timestamp, 1) returning id`, (err, res) => {
+      VALUES ($token$${title}$token$, $token$${note}$token$, current_timestamp, current_timestamp, 1) returning id`, (err, res) => {
         if (err) {
           console.log(err)
         } else {
@@ -105,8 +105,8 @@ app.put('/api/notes/edit/:id', (req, resp) => {
     console.log(note);
 
     client.query(`UPDATE notes
-                  SET title = '${title}',
-                      note = '${note}',
+                  SET title = $token$${title}$token$,
+                      note = $token$${note}$token$,
                       updated_at = current_timestamp
                  WHERE id = ${id};`, (err, res) => {
         if (err) {

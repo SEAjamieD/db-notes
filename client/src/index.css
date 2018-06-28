@@ -25,4 +25,15 @@ body {
   opacity: .4;
 }
 
+.markdown {
+  min-height: 60vh;
+  border: 1px solid red;
+}
+
+.markdown h2 {
+  font-size: 26px;
+  color: blue
+}
+
+
   /* font-family: 'Ubuntu', sans-serif; */

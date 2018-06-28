@@ -1,5 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+
 import Textarea from "react-textarea-autosize";
 import styled from 'styled-components';
 import anime from 'animejs';
@@ -114,6 +116,7 @@ class SingleNote extends React.Component {
     this.state = {
       isNew: true,
       change: null,
+      rawMarkDown: false,
       updatedTitle: '',
       updatedNote: '',
       note: '',
@@ -274,8 +277,18 @@ class SingleNote extends React.Component {
     }
   }
 
+  handleMarkdownSwap = () => {
+    const { rawMarkDown } = this.state;
+    console.log(this.state.rawMarkDown)
+    if (rawMarkDown === false) {
+      this.setState({rawMarkDown: true});
+    } else {
+      this.setState({rawMarkDown: false});
+    }
+  }
+
   whichBodyInput = () => {
-    const { isNew, note } = this.state;
+    const { isNew, note, updatedNote, rawMarkDown } = this.state;
 
     if ( isNew === true ) {
       return (
@@ -286,14 +299,24 @@ class SingleNote extends React.Component {
         placeholder="Something interesting here..."
         />
     );
-  } else if ( note ) {
+  } else if ( note && rawMarkDown === true ) {
+    return (
+      <Textarea
+        onChange={this.handleNoteBodyChange}
+        onClick={this.handleMarkdownSwap}
+        style={textAreaStyles}
+        rows={4}
+        defaultValue={updatedNote}
+        />
+    );
+  } else if ( note && rawMarkDown === false ) {
       return (
-        <Textarea
-          onChange={this.handleNoteBodyChange}
-          style={textAreaStyles}
-          rows={4}
-          defaultValue={note.note}
+        <div onClick={this.handleMarkdownSwap}>
+        <ReactMarkdown
+          className="markdown"
+          source={updatedNote}
           />
+        </div>
       );
     }
   }

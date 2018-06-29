@@ -83,4 +83,5 @@
 .markdown ul {
   list-style: square;
   color: #7F7FD5;
+  padding-left: 1.25rem;
 }

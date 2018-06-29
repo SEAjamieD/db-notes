@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
 import Textarea from "react-textarea-autosize";
+import DeleteWarning from "../common/deleteWarning/DeleteWarning";
 import styled from 'styled-components';
 import anime from 'animejs';
 import './markdown-styles.css';
@@ -110,6 +111,7 @@ class SingleNote extends React.Component {
       note: '',
       ready: false,
       error: '',
+      deleteWarning: false,
     }
   }
 
@@ -260,13 +262,20 @@ class SingleNote extends React.Component {
     });
   }
 
+  deleteWarning = () => {
+    console.log("delete clicked")
+    this.setState({deleteWarning: true})
+  }
+
+
+
   whichDoneButton = () => {
     if ( (this.state.isNew === true) && (this.state.change === true) ) {
       return <DoneButton onClick={this.createNote}>Save</DoneButton>;
     } else if (this.state.change === true) {
       return <DoneButton onClick={this.updateNote}>Save</DoneButton>
     } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
-      return <DoneButton onClick={this.deleteNote}>Delete</DoneButton>
+      return <DoneButton onClick={this.deleteWarning}>Delete</DoneButton>
     } else {
       return;
     }
@@ -316,10 +325,12 @@ class SingleNote extends React.Component {
   }
 
   render() {
-    const { note, change } = this.state;
+    const { note, change, deleteWarning  } = this.state;
 
     return (
       <SingleNotePage>
+
+        { deleteWarning === true ? <DeleteWarning /> : null }
 
         <BackArrowContainer onClick={this.goBack}>
           <BackArrow innerRef={el => (this.backArrow = el)}/>
@@ -373,6 +384,8 @@ class SingleNote extends React.Component {
       duration: 500
     });
   }
+
+
 
 
 }

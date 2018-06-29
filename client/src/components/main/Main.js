@@ -12,6 +12,7 @@ const Notepad = styled.div`
   height: auto;
   min-height: 90vh;
   width: 90vw;
+  max-width: 750px;
   background: white;
   padding-bottom: 20px;
   h1 {
@@ -42,6 +43,7 @@ const NoteTable = styled.table`
     border: none;
     border-radius: 0;
     border-bottom: 1px solid rgba(7, 156, 223, 0.2);
+    cursor: pointer;
   };
   td {
     font-family: 'Ubuntu', sans-serif;

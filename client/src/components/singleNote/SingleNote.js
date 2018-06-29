@@ -41,6 +41,7 @@ const Notepad = styled.div`
   height: auto;
   min-height: 90vh;
   width: 90vw;
+  max-width: 750px;
   background: white;
   transform: translateY(10vh);
 `;
@@ -49,16 +50,13 @@ const DoneButton = styled.button`
   position: absolute;
   top: 15px;
   right: 5vw;
-  color: red;
-  height: 30px;
-  width: 100px;
-  background: transparent;
-  font-size: 24px;
+  color: white;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  background: red;
   border: none;
   outline: 0;
-  border-radius: none;
-  text-transform: uppercase;
-  font-family: 'Ubuntu', sans-serif;
 `;
 
 const TitleInput = styled.input`
@@ -264,9 +262,9 @@ class SingleNote extends React.Component {
 
   whichDoneButton = () => {
     if ( (this.state.isNew === true) && (this.state.change === true) ) {
-      return <DoneButton onClick={this.createNote}>Done</DoneButton>;
+      return <DoneButton onClick={this.createNote}>Save</DoneButton>;
     } else if (this.state.change === true) {
-      return <DoneButton onClick={this.updateNote}>Done</DoneButton>
+      return <DoneButton onClick={this.updateNote}>Save</DoneButton>
     } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
       return <DoneButton onClick={this.deleteNote}>Delete</DoneButton>
     } else {

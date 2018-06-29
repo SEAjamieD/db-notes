@@ -1,94 +1,20 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import anime from 'animejs';
 
 import Textarea from "react-textarea-autosize";
 import DeleteWarning from "../common/deleteWarning/DeleteWarning";
-import styled from 'styled-components';
-import anime from 'animejs';
+
+import { Notepad,
+  SingleNotePage,
+  BackArrowContainer,
+  BackArrow,
+  DoneButton,
+  TitleInput,
+  textAreaStyles } from '../CustomStyles';
+
 import './markdown-styles.css';
-
-
-const SingleNotePage = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
-const BackArrowContainer = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  color: white;
-  top: 15px;
-  left: 5vw;
-  p {
-    display: block;
-    font-size: 11px;
-    padding-left: 10px;
-    text-transform: uppercase;
-  }
-`;
-
-const BackArrow = styled.div`
-  height: 30px;
-  width: 30px;
-  background: white;
-  clip-path: polygon(50% 0%, 0% 100%, 50% 75%, 100% 100%);
-  transform: rotate(-90deg);
-`;
-
-const Notepad = styled.div`
-  height: auto;
-  min-height: 90vh;
-  width: 90vw;
-  max-width: 750px;
-  background: white;
-  padding-bottom: 20px;
-`;
-
-const DoneButton = styled.button`
-  position: absolute;
-  top: 15px;
-  right: 5vw;
-  color: white;
-  height: 50px;
-  width: 50px;
-  border-radius: 100%;
-  background: red;
-  border: none;
-  outline: 0;
-`;
-
-const TitleInput = styled.input`
-  width: 100%;
-  border-radius: 0;
-  border: none;
-  outline: none;
-  display: block;
-  padding: 18px 5px 8px 18px;
-
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 26px;
-  font-weight: 600;
-  color: grey;
-`;
-
-
-const textAreaStyles = {
-  resize: 'none',
-  width: '100%',
-  minHeight: '30vh',
-  borderRadius: 0,
-  border: 'none',
-  outline: 'none',
-  paddingLeft: '18px',
-  paddingRight: '18px',
-  paddingTop: '20px',
-  paddingBottom: '20px',
-  fontSize: '14px',
-  };
-
 
 
 class SingleNote extends React.Component {
@@ -199,6 +125,21 @@ class SingleNote extends React.Component {
       })
   }
 
+
+
+
+//// handle the delete visor
+  deleteWarning = () => {
+    this.setState({deleteWarning: true})
+  }
+
+  resetWarning = () => {
+    this.setState({deleteWarning: false})
+  }
+
+
+//// Handle the note title body changes
+
   handleChange = (e) => {
     this.setState({
       change: true,
@@ -211,61 +152,6 @@ class SingleNote extends React.Component {
       change: true,
       updatedNote: e.target.value
     })
-  }
-
-  goBack = () => {
-    const { notepad, backArrow, backNotes } = this;
-    const { history } = this.props;
-    anime({
-      targets: backNotes,
-      translateY: [0, -70],
-      rotate: [0, 90],
-      elasticity: 400,
-      duration: 400
-    });
-    anime({
-      targets: backArrow,
-      translateY: [0, -50],
-      rotate: 90,
-      elasticity: 400,
-      delay: 250,
-      duration: 400
-    });
-    anime({
-      targets: notepad,
-      opacity: [1,0],
-      translateY: ["10vh", "-100%"],
-      elasticity: 400,
-      delay: 400,
-      duration: 500,
-      complete: function() {
-        history.push('/');
-      }
-    });
-  }
-
-  deleteWarning = () => {
-    this.setState({deleteWarning: true})
-  }
-
-  resetWarning = () => {
-    this.setState({deleteWarning: false})
-  }
-
-
-
-  whichDoneButton = () => {
-    if ( (this.state.isNew === true) && (this.state.change === true) ) {
-      return <DoneButton onClick={this.createNote}>Save</DoneButton>;
-    } else if (this.state.change === true) {
-      return <DoneButton onClick={this.updateNote}>Save</DoneButton>
-    } else if (this.state.change === null && this.state.rawMarkDown === true) {
-      return <DoneButton onClick={this.updateNote}>Done</DoneButton>
-    } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
-      return <DoneButton onClick={this.deleteWarning}>Delete</DoneButton>
-    } else {
-      return;
-    }
   }
 
   handleMarkdownSwap = () => {
@@ -287,6 +173,23 @@ class SingleNote extends React.Component {
   }
 
 
+//// Show Done, Save, or Delete
+  whichDoneButton = () => {
+    if ( (this.state.isNew === true) && (this.state.change === true) ) {
+      return <DoneButton onClick={this.createNote}>Save</DoneButton>;
+    } else if (this.state.change === true) {
+      return <DoneButton onClick={this.updateNote}>Save</DoneButton>
+    } else if (this.state.change === null && this.state.rawMarkDown === true) {
+      return <DoneButton onClick={this.updateNote}>Done</DoneButton>
+    } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
+      return <DoneButton onClick={this.deleteWarning}>Delete</DoneButton>
+    } else {
+      return;
+    }
+  }
+
+
+/// Show Markdown or Raw
   whichBodyInput = () => {
     const { isNew, updatedNote, rawMarkDown } = this.state;
 
@@ -321,6 +224,8 @@ class SingleNote extends React.Component {
     }
   }
 
+
+
   render() {
     const { note, deleteWarning  } = this.state;
     const { history, match } = this.props;
@@ -345,13 +250,12 @@ class SingleNote extends React.Component {
         <Notepad innerRef={el => (this.notepad = el)}>
 
 
-
-          <TitleInput
-          innerRef={input => (this.titleInput = input)}
-          onChange={this.handleChange}
-          placeholder="Title"
-          defaultValue={note.title}
-           />
+        <TitleInput
+        innerRef={input => (this.titleInput = input)}
+        onChange={this.handleChange}
+        placeholder="Title"
+        defaultValue={note.title}
+         />
 
         {this.whichBodyInput()}
 
@@ -360,6 +264,8 @@ class SingleNote extends React.Component {
       </SingleNotePage>
     );
   }
+
+
 
   animateIn() {
     const { notepad, backArrow, backNotes } = this;
@@ -388,6 +294,37 @@ class SingleNote extends React.Component {
     });
   }
 
+
+  goBack = () => {
+    const { notepad, backArrow, backNotes } = this;
+    const { history } = this.props;
+    anime({
+      targets: backNotes,
+      translateY: [0, -70],
+      rotate: [0, 90],
+      elasticity: 400,
+      duration: 400
+    });
+    anime({
+      targets: backArrow,
+      translateY: [0, -50],
+      rotate: 90,
+      elasticity: 400,
+      delay: 250,
+      duration: 400
+    });
+    anime({
+      targets: notepad,
+      opacity: [1,0],
+      translateY: ["10vh", "-100%"],
+      elasticity: 400,
+      delay: 400,
+      duration: 500,
+      complete: function() {
+        history.push('/');
+      }
+    });
+  }
 
 
 

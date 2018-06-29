@@ -4,7 +4,7 @@
   min-height: 60vh;
   font-size: 16px;
   font-family: 'Ubuntu', sans-serif;
-  padding: 5px 5%;
+  padding: 5px 5% 30px;
 }
 
 .markdown h1 {
@@ -66,12 +66,9 @@
   border: none;
 }
 
-
-
 .markdown blockquote {
 	background-color: rgba(145, 234, 228, 0.5);
-  margin-left: 1rem;
-  margin-right: auto;
+  margin: 1.5rem auto 1.5rem 1rem;
   border-left: 12px solid #79c6c1;
 	padding: 1rem;
 	font-style: italic;
@@ -84,4 +81,5 @@
   list-style: square;
   color: #7F7FD5;
   padding-left: 1.25rem;
+  margin-bottom: 1.5rem;
 }

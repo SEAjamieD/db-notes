@@ -147,14 +147,16 @@ class SingleNote extends React.Component {
   updateNote = () => {
     const { match } = this.props;
     const note = {"title": this.state.updatedTitle, "note": this.state.updatedNote }
-    console.log(note);
-    fetch(`/api/notes/edit/${match.params.id}`, {
-      method: 'PUT',
-      body: JSON.stringify({note}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // only hit the api if the content changed
+    if (this.state.change === true) {
+      console.log(note);
+      fetch(`/api/notes/edit/${match.params.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({note}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then( res => res.json() )
       .then( response => {
         console.log(response)
@@ -162,8 +164,13 @@ class SingleNote extends React.Component {
           change: null,
           rawMarkDown: false,
         })
-
       })
+    // otherwise just covert back to markup
+    } else {
+      this.setState({
+        rawMarkDown: false,
+      })
+    }
   }
 
   fetchSingleNote = () => {
@@ -252,6 +259,8 @@ class SingleNote extends React.Component {
       return <DoneButton onClick={this.createNote}>Save</DoneButton>;
     } else if (this.state.change === true) {
       return <DoneButton onClick={this.updateNote}>Save</DoneButton>
+    } else if (this.state.change === null && this.state.rawMarkDown === true) {
+      return <DoneButton onClick={this.updateNote}>Done</DoneButton>
     } else if ( (this.state.isNew === false) && (this.state.change === null) ) {
       return <DoneButton onClick={this.deleteWarning}>Delete</DoneButton>
     } else {

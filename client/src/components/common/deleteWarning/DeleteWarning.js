@@ -22,6 +22,15 @@ const DeleteVisor = styled.div`
     padding: .6rem;
     box-decoration-break: clone;
   }
+  @media (min-width: 600px) {
+
+    height: 250px;
+
+    h2 {
+      text-align: center;
+      margin: 40px auto;
+    }
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -30,6 +39,11 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 80%;
+  max-width: 350px;
+
+  @media (min-width: 600px) {
+    padding-top: 20px;
+  }
 `;
 
 const Button = styled.button`

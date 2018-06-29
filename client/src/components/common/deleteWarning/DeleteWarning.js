@@ -59,9 +59,6 @@ const Button = styled.button`
 `;
 
 class DeleteWarning extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.slideWarningIn()

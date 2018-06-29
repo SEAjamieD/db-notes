@@ -74,14 +74,6 @@ const TitleInput = styled.input`
   color: grey;
 `;
 
-const NoteContentP = styled.div`
-  width: 100%;
-  min-height: 60vh;
-  border-radius: 0;
-  outline: 0;
-  padding: 20px 18px;
-  font-size: 14px;
-`;
 
 const textAreaStyles = {
   resize: 'none',
@@ -117,13 +109,11 @@ class SingleNote extends React.Component {
 
   componentWillMount() {
     if (this.props.match.params.id) {
-      console.log("has params")
       this.setState({isNew: false})
     }
   }
 
   componentDidMount() {
-    console.log("isNew?: " + this.state.isNew)
     if (this.state.isNew === false) {
       this.fetchSingleNote();
       this.animateIn();
@@ -184,7 +174,6 @@ class SingleNote extends React.Component {
         });
       })
       .then((data) => {
-        console.log(data[0].title);
         this.setState({
           note: data[0],
           updatedTitle: data[0].title,
@@ -247,7 +236,6 @@ class SingleNote extends React.Component {
   }
 
   deleteWarning = () => {
-    console.log("delete clicked")
     this.setState({deleteWarning: true})
   }
 
@@ -271,7 +259,6 @@ class SingleNote extends React.Component {
 
   handleMarkdownSwap = () => {
     const { rawMarkDown } = this.state;
-    console.log(this.state.rawMarkDown)
     if (rawMarkDown === false) {
       this.setState({rawMarkDown: true});
     } else {
@@ -280,7 +267,7 @@ class SingleNote extends React.Component {
   }
 
   whichBodyInput = () => {
-    const { isNew, note, updatedNote, rawMarkDown } = this.state;
+    const { isNew, updatedNote, rawMarkDown } = this.state;
 
     if ( isNew === true ) {
       return (
@@ -313,7 +300,7 @@ class SingleNote extends React.Component {
   }
 
   render() {
-    const { note, change, deleteWarning  } = this.state;
+    const { note, deleteWarning  } = this.state;
     const { history, match } = this.props;
 
     return (

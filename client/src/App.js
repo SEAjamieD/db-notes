@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 
 import Main from './components/main/Main';
-import NewNote from './components/new/New';
 import SingleNote from './components/singleNote/SingleNote';
 import './App.css';
 

@@ -277,6 +277,14 @@ class SingleNote extends React.Component {
     }
   }
 
+  handleTouchStart = () => {
+    this.buttonPressTimer = setTimeOut( () => alert('long press activated'), 1500);
+  }
+
+  handleTouchEnd = () => {
+    clearTimeout(this.buttonPressTimer);
+  }
+
   whichBodyInput = () => {
     const { isNew, updatedNote, rawMarkDown } = this.state;
 
@@ -300,7 +308,8 @@ class SingleNote extends React.Component {
     );
   } else if ( updatedNote && rawMarkDown === false ) {
       return (
-        <div onDoubleClick={this.handleMarkdownSwap}>
+        <div onDoubleClick={this.handleMarkdownSwap} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd}>
+
         <ReactMarkdown
           className="markdown"
           source={updatedNote}

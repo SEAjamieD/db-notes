@@ -111,6 +111,7 @@ class SingleNote extends React.Component {
 
   componentWillMount() {
     if (this.props.match.params.id) {
+      console.log("has params")
       this.setState({isNew: false})
     }
   }
@@ -139,8 +140,8 @@ class SingleNote extends React.Component {
         let newID = response;
         this.props.history.push(`/notes/${newID}`);
         this.setState({
-          change: null,
-          rawMarkDown: false,
+          isNew: false,
+          change: null
         })
       })
   }
@@ -289,7 +290,7 @@ class SingleNote extends React.Component {
         placeholder="Something interesting here..."
         />
     );
-  } else if ( note && rawMarkDown === true ) {
+  } else if ( updatedNote && rawMarkDown === true ) {
     return (
       <Textarea
         onChange={this.handleNoteBodyChange}
@@ -298,7 +299,7 @@ class SingleNote extends React.Component {
         defaultValue={updatedNote}
         />
     );
-  } else if ( note && rawMarkDown === false ) {
+  } else if ( updatedNote && rawMarkDown === false ) {
       return (
         <div onClick={this.handleMarkdownSwap}>
         <ReactMarkdown

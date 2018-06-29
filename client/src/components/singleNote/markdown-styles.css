@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt|Ubuntu');
+
+.markdown {
+  min-height: 60vh;
+  font-size: 16px;
+  font-family: 'Ubuntu', sans-serif;
+  padding: 5px 5%;
+}
+
+.markdown h1 {
+  font-size: 1.7rem;
+  background: #7F7FD5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+  background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: .5rem 0;
+}
+
+.markdown h2 {
+  font-size: 1.4rem;
+  color: #7F7FD5;
+  padding: .5rem 0;
+}
+
+.markdown h3 {
+  font-size: 1.2rem;
+  color: #86A8E7;
+  padding: .5rem 0;
+}
+
+.markdown p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.markdown a {
+  text-decoration: none;
+  color: #36f7b9;
+  border-bottom: 2px solid #61edc0;
+}
+
+.markdown code {
+	padding: 1px 4px;
+	border: 1px solid #7F7FD5;
+	background-color: #86A8E7;
+	color: white;
+}
+
+.markdown pre {
+  background-color: #ededed;
+  margin: 10px auto 10px 1rem;
+	padding: 1rem;
+	font-size: .85rem;
+	color: #333;
+  overflow-x: auto;
+	max-width: 40rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+}
+
+.markdown pre code {
+  color: inherit;
+  background: transparent;
+  border: none;
+}
+
+
+
+.markdown blockquote {
+	background-color: rgba(145, 234, 228, 0.5);
+  margin-left: 1rem;
+  margin-right: auto;
+  border-left: 12px solid #79c6c1;
+	padding: 1rem;
+	font-style: italic;
+	font-size: 1.15rem;
+	color: #79c6c1;
+	max-width: 40rem;
+}
+
+.markdown ul {
+  list-style: square;
+  color: #7F7FD5;
+}

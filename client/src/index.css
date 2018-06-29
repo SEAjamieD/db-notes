@@ -5,12 +5,6 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
-
 .notepad-date {
   text-align: right;
   font-size: .85rem;
@@ -23,15 +17,6 @@ body {
 ::-webkit-input-placeholder {
   font-style: italic;
   opacity: .4;
-}
-
-.markdown {
-  min-height: 60vh;
-}
-
-.markdown h2 {
-  font-size: 26px;
-  color: blue
 }
 
 

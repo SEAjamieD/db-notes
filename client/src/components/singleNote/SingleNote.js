@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import Textarea from "react-textarea-autosize";
 import styled from 'styled-components';
 import anime from 'animejs';
+import './markdown-styles.css';
 
 
 const BackArrowContainer = styled.div`
@@ -36,23 +37,6 @@ const Notepad = styled.div`
   width: 90vw;
   background: white;
   transform: translateY(10vh);
-  h1 {
-    width: 100%;
-    border-radius: 0;
-    display: block;
-    padding: 18px 5px 8px 18px;
-
-    font-family: 'Ubuntu', sans-serif;
-    font-size: 26px;
-    font-weight: 600;
-    color: grey;
-  };
-  p {
-    width: 100%;
-    min-height: 30vh;
-    padding: 20px 18px;
-    font-size: 16px;
-  }
 `;
 
 const DoneButton = styled.button`

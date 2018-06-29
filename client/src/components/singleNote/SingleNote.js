@@ -117,6 +117,8 @@ class SingleNote extends React.Component {
     if (this.state.isNew === false) {
       this.fetchSingleNote();
       this.animateIn();
+    } else {
+      this.animateIn();
     }
   }
 

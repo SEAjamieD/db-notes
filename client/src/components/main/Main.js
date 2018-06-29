@@ -92,7 +92,7 @@ class Main extends Component {
       .catch((error) => {
         console.log('Error', error);
         this.setState({
-          ready: false,
+          ready: true,
           error: error.err
         })
       })

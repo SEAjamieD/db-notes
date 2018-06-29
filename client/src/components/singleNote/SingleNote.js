@@ -277,13 +277,15 @@ class SingleNote extends React.Component {
     }
   }
 
+  //Long Press Functions
   handleTouchStart = () => {
-    this.buttonPressTimer = setTimeOut( () => alert('long press activated'), 1500);
+    this.buttonPressTimer = setTimeout( () => this.setState({rawMarkDown: true}), 1500);
   }
 
   handleTouchEnd = () => {
     clearTimeout(this.buttonPressTimer);
   }
+
 
   whichBodyInput = () => {
     const { isNew, updatedNote, rawMarkDown } = this.state;

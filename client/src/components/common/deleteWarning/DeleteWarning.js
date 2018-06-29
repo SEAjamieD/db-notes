@@ -40,23 +40,51 @@ const Button = styled.button`
   color: white;
   text-transform: uppercase;
   border: none;
-  background: #ED4337;
+  outline: 0;
+  background: ${props => props.primary ? '#ED4337' : '#00FA9A'};
 `;
 
 class DeleteWarning extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     this.slideWarningIn()
   }
 
+  handleWarningChange = () => {
+    this.props.warningReset();
+  }
+
+  deleteNote = () => {
+    const { match, history } = this.props;
+    fetch(`/api/notes/${match.params.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then( res => res.json() )
+      .then( response => {
+        console.log(response)
+        history.push('/');
+      })
+  }
+
   render() {
     return (
-      <DeleteVisor className="delete-shield" innerRef={el => (this.deleteWarning = el)}>
+      <DeleteVisor
+      className="delete-shield"
+      innerRef={el => (this.deleteWarning = el)}
+      >
         <h2>
           <span>Sure you wanna delete?</span>
         </h2>
         <ButtonContainer>
-          <Button/> <Button>Delete</Button>
+          <Button onClick={this.slideWarningOut}>Cancel</Button>
+
+          <Button primary onClick={this.deleteNote}>Delete</Button>
         </ButtonContainer>
       </DeleteVisor>
     );
@@ -69,6 +97,19 @@ slideWarningIn() {
     translateY: [-300, 0],
     easing: 'easeInSine',
     duration: 200
+  })
+}
+
+slideWarningOut = () => {
+  const { deleteWarning, handleWarningChange } = this;
+  anime({
+    targets: deleteWarning,
+    translateY: [0, -300],
+    easing: 'easeOutSine',
+    duration: 200,
+    complete: function() {
+      handleWarningChange();
+    }
   })
 }
 

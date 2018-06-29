@@ -174,22 +174,6 @@ class SingleNote extends React.Component {
       })
   }
 
-  deleteNote = () => {
-    const { match, history } = this.props;
-    fetch(`/api/notes/${match.params.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then( res => res.json() )
-      .then( response => {
-        console.log(response)
-        history.push('/');
-      })
-  }
-
-
   fetchSingleNote = () => {
     const { match } = this.props;
     fetch(`/api/notes/${match.params.id}`)
@@ -267,6 +251,10 @@ class SingleNote extends React.Component {
     this.setState({deleteWarning: true})
   }
 
+  resetWarning = () => {
+    this.setState({deleteWarning: false})
+  }
+
 
 
   whichDoneButton = () => {
@@ -326,11 +314,17 @@ class SingleNote extends React.Component {
 
   render() {
     const { note, change, deleteWarning  } = this.state;
+    const { history, match } = this.props;
 
     return (
       <SingleNotePage>
 
-        { deleteWarning === true ? <DeleteWarning /> : null }
+        { deleteWarning === true ?
+          <DeleteWarning
+          history={history}
+          match={match}
+          warningReset={this.resetWarning}
+          /> : null }
 
         <BackArrowContainer onClick={this.goBack}>
           <BackArrow innerRef={el => (this.backArrow = el)}/>

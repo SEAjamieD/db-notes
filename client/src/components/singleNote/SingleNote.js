@@ -289,7 +289,7 @@ class SingleNote extends React.Component {
     );
   } else if ( updatedNote && rawMarkDown === false ) {
       return (
-        <div onClick={this.handleMarkdownSwap}>
+        <div onDoubleClick={this.handleMarkdownSwap}>
         <ReactMarkdown
           className="markdown"
           source={updatedNote}

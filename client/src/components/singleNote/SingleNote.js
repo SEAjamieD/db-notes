@@ -44,7 +44,7 @@ const Notepad = styled.div`
   width: 90vw;
   max-width: 750px;
   background: white;
-  transform: translateY(10vh);
+  padding-bottom: 20px;
 `;
 
 const DoneButton = styled.button`

@@ -11,8 +11,6 @@ import './App.css';
 
 
 const AppDiv = styled.div`
-  height: 100vh;
-  width: 100vw;
   display: flex;
   justify-content: center;
 `;

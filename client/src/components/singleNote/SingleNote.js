@@ -8,6 +8,12 @@ import anime from 'animejs';
 import './markdown-styles.css';
 
 
+const SingleNotePage = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
 const BackArrowContainer = styled.div`
   position: absolute;
   display: flex;
@@ -43,7 +49,7 @@ const DoneButton = styled.button`
   position: absolute;
   top: 15px;
   right: 5vw;
-  color: white;
+  color: red;
   height: 30px;
   width: 100px;
   background: transparent;
@@ -315,7 +321,7 @@ class SingleNote extends React.Component {
     const { note, change } = this.state;
 
     return (
-      <div>
+      <SingleNotePage>
 
         <BackArrowContainer onClick={this.goBack}>
           <BackArrow innerRef={el => (this.backArrow = el)}/>
@@ -339,7 +345,7 @@ class SingleNote extends React.Component {
 
         </Notepad>
 
-      </div>
+      </SingleNotePage>
     );
   }
 

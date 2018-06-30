@@ -66,6 +66,7 @@
   color: inherit;
   background: transparent;
   border: none;
+  font-size: .875rem;
 }
 
 .markdown blockquote {
@@ -74,9 +75,11 @@
   border-left: 12px solid #79c6c1;
 	padding: 1rem;
 	font-style: italic;
-	font-size: 1.15rem;
-	color: #79c6c1;
 	max-width: 40rem;
+}
+
+.markdown blockquote p {
+  font-size: 1.25rem;
 }
 
 .markdown ul {
@@ -96,5 +99,5 @@
 }
 
 .markdown em {
-  color: lime;
+  font-style: italic;
 }

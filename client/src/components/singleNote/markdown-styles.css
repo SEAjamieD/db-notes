@@ -31,7 +31,7 @@
 }
 
 .markdown p {
-  font-size: 1rem;
+  font-size: .875rem;
   line-height: 1.5;
   color: #333;
 }
@@ -47,6 +47,7 @@
 	border: 1px solid #7F7FD5;
 	background-color: #86A8E7;
 	color: white;
+  font-weight: 300;
 }
 
 .markdown pre {
@@ -83,4 +84,17 @@
   color: #7F7FD5;
   padding-left: 1.25rem;
   margin-bottom: 1.5rem;
+}
+
+.markdown li {
+  line-height: 1.3;
+}
+
+.markdown strong {
+  color: #079cdf;
+  font-weight: 800;
+}
+
+.markdown em {
+  color: lime;
 }

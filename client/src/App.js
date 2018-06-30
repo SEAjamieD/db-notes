@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
-
 import styled from 'styled-components';
-
 
 import Main from './components/main/Main';
 import SingleNote from './components/singleNote/SingleNote';

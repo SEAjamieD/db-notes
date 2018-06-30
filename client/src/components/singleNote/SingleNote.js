@@ -225,7 +225,8 @@ class SingleNote extends React.Component {
   }
 
 
-
+  // @render
+  
   render() {
     const { note, deleteWarning  } = this.state;
     const { history, match } = this.props;

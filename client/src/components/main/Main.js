@@ -63,6 +63,8 @@ class Main extends Component {
     }
   }
 
+  // @render
+
   render() {
     const { notes } = this.state;
 

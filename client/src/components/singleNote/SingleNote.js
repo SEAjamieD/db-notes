@@ -5,6 +5,7 @@ import anime from 'animejs';
 
 import Textarea from "react-textarea-autosize";
 import DeleteWarning from "../common/deleteWarning/DeleteWarning";
+import CodeBlock from './CodeBlock';
 
 import { Notepad,
   SingleNotePage,
@@ -218,6 +219,7 @@ class SingleNote extends React.Component {
         <ReactMarkdown
           className="markdown"
           source={updatedNote}
+          renderers={{code: CodeBlock}}
           />
         </div>
       );
@@ -226,7 +228,7 @@ class SingleNote extends React.Component {
 
 
   // @render
-  
+
   render() {
     const { note, deleteWarning  } = this.state;
     const { history, match } = this.props;

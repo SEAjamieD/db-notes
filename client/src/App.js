@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Main from './components/main/Main';
 import SingleNote from './components/singleNote/SingleNote';
+import Login from './components/login/Login';
 import './App.css';
 
 
@@ -20,7 +21,8 @@ class App extends Component {
 
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Main} />
+            <Route exact path="/" component={Login} />
+            <Route exact path="/main" component={Main} />
             <Route exact path="/notes/new" component={SingleNote} />
             <Route exact path="/notes/:id" component={SingleNote} />
 

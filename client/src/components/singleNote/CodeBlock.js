@@ -4,14 +4,6 @@ const hljs = window.hljs
 
 
 class CodeBlock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.setRef = this.setRef.bind(this)
-  }
-
-  setRef(el) {
-    this.codeEl = el
-  }
 
   componentDidMount() {
     this.highlightCode()
@@ -22,13 +14,13 @@ class CodeBlock extends React.Component {
   }
 
   highlightCode() {
-    hljs.highlightBlock(this.codeEl)
+    hljs.highlightBlock(this.codeBlock)
   }
 
   render() {
     return (
       <pre>
-        <code ref={this.setRef}>
+        <code ref={el => (this.codeBlock = el)}>
           {this.props.value}
         </code>
       </pre>

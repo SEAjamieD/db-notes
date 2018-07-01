@@ -17,8 +17,11 @@ http://zenorocha.mit-license.org
 .hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.5em;
+  padding: 1em;
+  line-height: 1;
   background: #282a36;
+  border: none;
+  font-family: 'Share Tech Mono', monospace;
 }
 
 .hljs-keyword,

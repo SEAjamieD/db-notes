@@ -14,6 +14,13 @@ const AppDiv = styled.div`
 `;
 
 class App extends Component {
+  constructor() {
+    super();
+  }
+
+  isLoggedIn = () => {
+    console.log("on enter hit")
+  }
 
   render() {
     return (
@@ -21,8 +28,8 @@ class App extends Component {
 
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/main" component={Main} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Main} onEnter={this.isLoggedIn()} />
             <Route exact path="/notes/new" component={SingleNote} />
             <Route exact path="/notes/:id" component={SingleNote} />
 
